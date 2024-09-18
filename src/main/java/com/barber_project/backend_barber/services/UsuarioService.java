@@ -39,7 +39,7 @@ public class UsuarioService {
 	}
 
 	private void updateData(Usuario entity, Usuario obj) {
-		entity.setNomeCliente(obj.getNomeCliente());
+		entity.setNome(obj.getNome());
 		entity.setEmail(obj.getEmail());
 		entity.setSenha(obj.getSenha());
 		entity.setTelefone(obj.getTelefone());

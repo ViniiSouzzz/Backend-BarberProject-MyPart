@@ -46,9 +46,10 @@ public class Agendamento implements Serializable {
 	
 	private Servico servico;
 	
-	public Agendamento() {
+	public Agendamento(Object object, String string, int i, int j, String string2) {
+		
 	}
-
+	
 	public Agendamento(Long id, LocalDateTime data, Usuario usuario, Profissional profissional, List<Servico> servicos,
 			Servico servico) {
 		super();
@@ -59,6 +60,8 @@ public class Agendamento implements Serializable {
 		this.servicos = servicos;
 		this.servico = servico;
 	}
+
+	
 
 	public Long getId() {
 		return id;

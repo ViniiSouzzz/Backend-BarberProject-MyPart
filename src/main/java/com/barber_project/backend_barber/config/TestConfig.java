@@ -58,6 +58,9 @@ public class TestConfig implements CommandLineRunner{
 		Usuario user1 = new Usuario(null, "vanderson@teste.com", "Vanderson", "123456", "9645612");
 		usuarioRepository.saveAll(Arrays.asList(user1));
 		
+		Agendamento agend1 = new Agendamento(null, "2024-09-12-16-00-00-00", 2, 1, "Corte Viking");
+		agendamentoRepository.saveAll(Arrays.asList(agend1));
+		
 		
 	}
 }

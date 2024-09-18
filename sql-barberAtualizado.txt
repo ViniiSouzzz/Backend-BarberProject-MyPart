@@ -1,0 +1,103 @@
+model Usuario {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  email        String        @unique
+  senha        String
+  telefone     String
+  barbeiro     Boolean
+  agendamentos Agendamento[]
+
+  @@map("usuario")
+}
+
+model Profissional {
+  id                   Int           @id @default(autoincrement())
+  nome                 String        @unique
+  descricao            String
+  imagemUrl            String
+  avaliacao            Float
+  quantidadeAvaliacoes Int
+  agendamentos         Agendamento[]
+
+  @@map("profissional")
+}
+
+model Servico {
+  id           Int           @id @default(autoincrement())
+  nome         String        @unique
+  descricao    String
+  preco        Float
+  qtdeSlots    Int
+  imagemURL    String
+  agendamentos Agendamento[]
+
+  @@map("servico")
+}
+
+model Agendamento {
+  id             Int          @id @default(autoincrement())
+  data           DateTime     @db.Timestamptz(3)
+  profissional   Profissional @relation(fields: [profissionalId], references: [id])
+  profissionalId Int
+  servicos       Servico[]
+  usuario        Usuario      @relation(fields: [usuarioId], references: [id])
+  usuarioId      Int
+
+  @@map("agendamento")
+}
+
+-- Criação do Banco de dados
+CREATE DATABASE BancoDeDados;
+USE BancoDeDados;
+
+-- Tabela Usuario
+CREATE TABLE Usuario (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  senha VARCHAR(255) NOT NULL,
+  telefone BIGINT NOT NULL,
+  barbeiro BOOLEAN NOT NULL
+);
+
+-- Tabela Profissional
+CREATE TABLE Profissional (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  descricao TEXT NOT NULL,
+  imgUrl VARCHAR(255) NOT NULL,
+  avaliacao FLOAT NOT NULL,
+  qtdAvaliacoes INT NOT NULL
+);
+
+-- Tabela Servico
+CREATE TABLE Servico (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(500) NOT NULL,
+  descricao TEXT NOT NULL,
+  preco DECIMAL(10, 2) NOT NULL,
+  qtdeSlots INT NOT NULL,
+  imgUrl VARCHAR(255) NOT NULL
+);
+
+-- Tabela Agendamento
+CREATE TABLE Agendamento (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  data DATETIME NOT NULL,
+  
+  -- Relacionamento com Usuario
+  usuarioId INT NOT NULL,
+  FOREIGN KEY (usuarioId) REFERENCES Usuario(id) ON DELETE CASCADE,
+  
+  -- Relacionamento com Profissional
+  profissionalId INT NOT NULL,
+  FOREIGN KEY (profissionalId) REFERENCES Profissional(id) ON DELETE CASCADE,
+  
+  -- Relacionamento com Servico
+  servicoId INT NOT NULL,
+  FOREIGN KEY (servicoId) REFERENCES Servico(id) ON DELETE CASCADE
+);
+
+
+
+
